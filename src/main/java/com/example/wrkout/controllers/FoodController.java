@@ -39,7 +39,7 @@ public class FoodController {
     }
     @DeleteMapping("/delete")
     public ResponseEntity<Food> deleteExercise(@RequestBody Food foodToBeDeleted){
-        foodRepo.delete(foodToBeDeleted);
+        foodRepo.deleteById(foodToBeDeleted.getId());
         return ResponseEntity.noContent().build();
     }
     @DeleteMapping("/delete/{id}")

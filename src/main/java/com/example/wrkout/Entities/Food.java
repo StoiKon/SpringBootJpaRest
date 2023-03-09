@@ -64,4 +64,8 @@ public class Food {
                 ", calories=" + calories +
                 '}';
     }
+
+    public Long getId() {
+        return id;
+    }
 }

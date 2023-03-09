@@ -86,4 +86,8 @@ public class Exercise {
                 ", sets=" + sets +
                 '}';
     }
+
+    public Long getId() {
+        return id;
+    }
 }

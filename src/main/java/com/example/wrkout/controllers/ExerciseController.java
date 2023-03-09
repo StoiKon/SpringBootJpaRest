@@ -15,35 +15,42 @@ import java.util.List;
 @RequestMapping("/exercise")
 public class ExerciseController {
     private final ExceriseRepository exRepo;
+
     @Autowired
     public ExerciseController(ExceriseRepository exRepo) {
         this.exRepo = exRepo;
     }
+
     @GetMapping("/all")
-    public ResponseEntity<List<Exercise>> getExercises(){
+    public ResponseEntity<List<Exercise>> getExercises() {
         return ResponseEntity.ok(exRepo.findAll().stream().toList());
     }
+
     @GetMapping("/get/{id}")
-    public ResponseEntity<Exercise> get(@PathVariable Long id){
+    public ResponseEntity<Exercise> get(@PathVariable Long id) {
         return ResponseEntity.ok(exRepo.findById(id).get());
     }
-    @RequestMapping(value="/new",method = {RequestMethod.POST,RequestMethod.PUT})
+
+    @RequestMapping(value = "/new", method = {RequestMethod.POST, RequestMethod.PUT})
     public ResponseEntity<?> addExercise(@RequestBody Exercise exerciseToBeAdded) {
-        if(validateExercise(exerciseToBeAdded)){
+        if (validateExercise(exerciseToBeAdded)) {
             return ResponseEntity.ok(exRepo.save(exerciseToBeAdded));
         }
         return ResponseEntity.badRequest().body("bad object input");
     }
-    private boolean validateExercise(Exercise ex){
-        return ex!=null && ex.getName()!=null && !ex.getName().equals("");// && ex.getDate()!=null;
+
+    private boolean validateExercise(Exercise ex) {
+        return ex != null && ex.getName() != null && !ex.getName().equals("");// && ex.getDate()!=null;
     }
+
     @DeleteMapping("/delete")
-    public ResponseEntity<Exercise> deleteExercise(@RequestBody Exercise exerciseToBeDeleted){
-        exRepo.delete(exerciseToBeDeleted);
+    public ResponseEntity<Exercise> deleteExercise(@RequestBody Exercise exerciseToBeDeleted) {
+        exRepo.deleteById(exerciseToBeDeleted.getId());
         return ResponseEntity.noContent().build();
     }
+
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Exercise> deleteExerciseById(@PathVariable Long id){
+    public ResponseEntity<Exercise> deleteExerciseById(@PathVariable Long id) {
         exRepo.deleteById(id);
         return ResponseEntity.noContent().build();
     }
